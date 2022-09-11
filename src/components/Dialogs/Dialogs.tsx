@@ -1,28 +1,22 @@
 import React from "react";
 import classes from "./Dialogs.module.css";
-import { NavLink } from "react-router-dom";
+import { DialogItem } from "./DialogItem";
+import { Message } from "./Message";
 
 export const Dialogs = () => {
   return (
     <div className={classes.dialogs}>
       <div className={classes.dialogsItems}>
-        <div className={classes.dialog + " " + classes.active}>
-          <NavLink to={"/Dialogs/1"}>alexey</NavLink>
-        </div>
-        <div className={classes.dialog}>
-          <NavLink to={"/Dialogs/2"}>alexey2</NavLink>
-        </div>
-        <div className={classes.dialog}>
-          <NavLink to={"/Dialogs/3"}>alexey3</NavLink>
-        </div>
-        <div className={classes.dialog}>
-          <NavLink to={"/Dialogs/4"}>alexey4</NavLink>
-        </div>
+        <DialogItem name={"Gay"} id={"1"} />
+        <DialogItem name={"BIG GAY"} id={"2"} />
+        <DialogItem name={"adad"} id={"3"} />
+        <DialogItem name={"ada"} id={"4"} />
       </div>
       <div className={classes.messages}>
-        <div className={classes.message}>Hey u gay?</div>
-        <div className={classes.message}>No, im dungeon master</div>
-        <div className={classes.message}>NANI?</div>
+        <Message message={"A u GAY?"} />
+        <Message message={"NO u GAY"} />
+        <Message message={"AHAHAHA, We all GAYS"} />
+        <Message message={"YAAAAS"} />
       </div>
     </div>
   );
