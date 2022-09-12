@@ -7,15 +7,17 @@ body {
   margin: 0;
   background-color: #141414;
 }
+
 .app-wrapper {
   display: grid;
   grid-template-areas: "h h "
-                       "n c ";
+                       "n c";
   grid-template-rows: 60px 1fr;
-  grid-template-columns: 1fr 10fr ;
+  grid-template-columns: 1fr 10fr;
   grid-gap: 5px;
   background: #141414;
-width: 1080px;
+  margin: 0 auto;
+
 }
 
 .app-wrapper-content {
@@ -25,5 +27,5 @@ width: 1080px;
   background-color: #1e1e1e;
   border: 1px solid dimgray;
   border-radius: 15px;
-  margin: 10px;
+  margin: 10px auto 0;
 }
