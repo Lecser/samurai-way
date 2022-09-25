@@ -1,8 +1,13 @@
 import React from "react";
 import classes from "./MyPosts.module.css";
 import { Post } from "./Post/Post";
+import { PostsDataType } from "../../../index";
 
-export const MyPosts = () => {
+type MyPostsPropsType = {
+  postsData: Array<PostsDataType>;
+};
+
+export const MyPosts = (props: MyPostsPropsType) => {
   return (
     <div className={classes.postsBlock}>
       <h3>My posts</h3>
@@ -16,8 +21,9 @@ export const MyPosts = () => {
       </div>
       <div>new post</div>
       <div className={classes.posts}>
-        <Post message={"Hi, how are you?"} likesCount={15} />
-        <Post message={"first post"} likesCount={20} />
+        {props.postsData.map((p) => (
+          <Post key={p.id} message={p.message} likesCount={p.likesCount} />
+        ))}
       </div>
     </div>
   );

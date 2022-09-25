@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+
 }
 
 body {
@@ -27,5 +28,4 @@ body {
   background-color: #1e1e1e;
   border: 1px solid dimgray;
   border-radius: 15px;
-  margin: 10px auto 0;
 }

@@ -2,21 +2,25 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import { DialogItem } from "./DialogItem/DialogItem";
 import { Message } from "./Message/Message";
+import { DialogsType, Messages } from "../../index";
 
-export const Dialogs = () => {
+type DialogsPropsType = {
+  messages: Array<Messages>;
+  dialogs: Array<DialogsType>;
+};
+
+export const Dialogs = (props: DialogsPropsType) => {
   return (
     <div className={classes.dialogs}>
       <div className={classes.dialogsItems}>
-        <DialogItem name={"Gay"} id={"1"} />
-        <DialogItem name={"BIG GAY"} id={"2"} />
-        <DialogItem name={"adad"} id={"3"} />
-        <DialogItem name={"ada"} id={"4"} />
+        {props.dialogs.map((d) => (
+          <DialogItem key={d.id} name={d.name} id={`${d.id}`} />
+        ))}
       </div>
       <div className={classes.messages}>
-        <Message message={"A u GAY?"} />
-        <Message message={"NO u GAY"} />
-        <Message message={"AHAHAHA, We all GAYS"} />
-        <Message message={"YAAAAS"} />
+        {props.messages.map((m) => (
+          <Message key={m.id} message={m.message} />
+        ))}
       </div>
     </div>
   );
