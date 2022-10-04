@@ -1,22 +1,36 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import classes from "./MyPosts.module.css";
 import { Post } from "./Post/Post";
-import { PostsDataType } from "../../../index";
+import { ActionType, PostsType } from "../../Redux/Store";
+import { addPostAC, updateNewPostTextAC } from "../../Redux/profileReducer";
 
 type MyPostsPropsType = {
-  postsData: Array<PostsDataType>;
+  postsData: Array<PostsType>;
+  newPostText: string;
+  updateNewPostText: (value: string) => void;
+  addPost: () => void;
 };
 
 export const MyPosts = (props: MyPostsPropsType) => {
+  let addPost = () => {
+    props.addPost();
+  };
+  const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    props.updateNewPostText(e.currentTarget.value);
+  };
   return (
     <div className={classes.postsBlock}>
       <h3>My posts</h3>
       <div>
         <div>
-          <textarea></textarea>
+          <textarea
+            placeholder={"Add post"}
+            onChange={onChangeHandler}
+            value={props.newPostText}
+          />
         </div>
         <div>
-          <button>Add post</button>
+          <button onClick={addPost}>Add post</button>
         </div>
       </div>
       <div>new post</div>

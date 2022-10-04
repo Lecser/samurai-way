@@ -1,24 +1,21 @@
 * {
   margin: 0;
   padding: 0;
-
 }
 
 body {
-  margin: 0;
   background-color: #141414;
 }
 
 .app-wrapper {
   display: grid;
-  grid-template-areas: "h h "
-                       "n c";
+  grid-template-areas:
+    "h h "
+    "n c";
   grid-template-rows: 60px 1fr;
   grid-template-columns: 1fr 10fr;
   grid-gap: 5px;
   background: #141414;
-  margin: 0 auto;
-
 }
 
 .app-wrapper-content {
