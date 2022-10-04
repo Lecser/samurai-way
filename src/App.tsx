@@ -6,10 +6,9 @@ import { Profile } from "./components/Profile/Profile";
 import { Dialogs } from "./components/Dialogs/Dialogs";
 import { Route } from "react-router-dom";
 import { ActionType, StoreType } from "./components/Redux/Store";
-import { AppStateType } from "./components/Redux/reduxStore";
 
 type AppPropsType = {
-  store: AppStateType;
+  store: StoreType;
   dispatch: (Action: ActionType) => void;
 };
 
@@ -25,7 +24,7 @@ function App(props: AppPropsType) {
             <Dialogs
               store={props.store}
               dispatch={props.dispatch}
-              newMessageBody={props.store.dialogsPage}
+              newMessageBody={props.store.getState().dialogsPage.newMessageBody}
             />
           )}
         />

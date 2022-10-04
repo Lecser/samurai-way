@@ -9,7 +9,7 @@ import { AppStateType } from "../Redux/reduxStore";
 type DialogsPropsType = {
   newMessageBody: string;
   dispatch: (Action: ActionType) => void;
-  store: AppStateType;
+  store: StoreType;
 };
 
 export const Dialogs = (props: DialogsPropsType) => {

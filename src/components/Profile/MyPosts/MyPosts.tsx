@@ -7,16 +7,15 @@ import { addPostAC, updateNewPostTextAC } from "../../Redux/profileReducer";
 type MyPostsPropsType = {
   postsData: Array<PostsType>;
   newPostText: string;
-  updateNewPostText: (value: string) => void;
-  addPost: () => void;
+  dispatch: (action: ActionType) => void;
 };
 
 export const MyPosts = (props: MyPostsPropsType) => {
-  let addPost = () => {
-    props.addPost();
+  const addPost = () => {
+    props.dispatch(addPostAC());
   };
   const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.updateNewPostText(e.currentTarget.value);
+    props.dispatch(updateNewPostTextAC(e.currentTarget.value));
   };
   return (
     <div className={classes.postsBlock}>

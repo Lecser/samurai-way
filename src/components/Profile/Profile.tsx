@@ -1,11 +1,10 @@
 import React from "react";
 import { MyPosts } from "./MyPosts/MyPosts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
-import { ActionType } from "../Redux/Store";
-import { AppStateType } from "../Redux/reduxStore";
+import { ActionType, StoreType } from "../Redux/Store";
 
 type ProfilePropsType = {
-  store: any;
+  store: StoreType;
   dispatch: (Action: ActionType) => void;
 };
 
@@ -16,7 +15,7 @@ export const Profile = (props: ProfilePropsType) => {
       <ProfileInfo />
       <MyPosts
         newPostText={state.newPostText}
-        dispatch={props.dispatch}
+        dispatch={props.store.dispatch}
         postsData={state.posts}
       />
     </div>
