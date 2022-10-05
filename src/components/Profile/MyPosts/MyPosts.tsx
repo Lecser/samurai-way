@@ -1,18 +1,21 @@
 import React, { ChangeEvent } from "react";
 import classes from "./MyPosts.module.css";
 import { Post } from "./Post/Post";
-import { addPostAC, updateNewPostTextAC } from "../../Redux/profileReducer";
-import { store } from "../../Redux/reduxStore";
+import { PostsType } from "../../Redux/profileReducer";
 
-type MyPostsPropsType = {};
+type MyPostsPropsType = {
+  addPost: () => void;
+  updateNewPost: (value: string) => void;
+  posts: Array<PostsType>;
+  newPostText: string;
+};
 
 export const MyPosts = (props: MyPostsPropsType) => {
-  let state = store.getState();
   const addPost = () => {
-    store.dispatch(addPostAC());
+    props.addPost();
   };
   const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    store.dispatch(updateNewPostTextAC(e.currentTarget.value));
+    props.updateNewPost(e.currentTarget.value);
   };
   return (
     <div className={classes.postsBlock}>
@@ -22,7 +25,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
           <textarea
             placeholder={"Add post"}
             onChange={onChangeHandler}
-            value={state.profilePage.newPostText}
+            value={props.newPostText}
           />
         </div>
         <div>
@@ -31,7 +34,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
       </div>
       <div>new post</div>
       <div className={classes.posts}>
-        {state.profilePage.posts.map((p) => (
+        {props.posts.map((p) => (
           <Post key={p.id} message={p.message} likesCount={p.likesCount} />
         ))}
       </div>

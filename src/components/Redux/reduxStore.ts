@@ -10,5 +10,5 @@ const rootReducer = combineReducers({
 });
 
 export type AppStoreType = ReturnType<typeof rootReducer>;
-
+export type AppDispatch = typeof store.dispatch;
 export const store = createStore(rootReducer);

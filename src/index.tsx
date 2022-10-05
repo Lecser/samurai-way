@@ -13,7 +13,3 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById("root")
 );
-
-store.subscribe(() => {
-  let state = store.getState();
-});
