@@ -1,9 +1,14 @@
-import { PostsType, ProfilePageType } from "./Store";
-
 type ProfileActionType = addPostACType | updateNewPostTextACType;
 
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const ADD_POST = "ADD-POST";
+
+export type PostsType = {
+  id: number;
+  message: string;
+  likesCount: number;
+};
+type InitialStateType = typeof initialState;
 const initialState = {
   posts: [
     { id: 1, message: "Hi, how are you?", likesCount: 15 },
@@ -11,27 +16,22 @@ const initialState = {
   ] as Array<PostsType>,
   newPostText: "",
 };
-type InitialStateType = typeof initialState;
 
 export const profileReducer = (
   state: InitialStateType = initialState,
   action: ProfileActionType
-) => {
+): InitialStateType => {
   switch (action.type) {
     case ADD_POST: {
-      let newPost = {
-        id: 5,
-        message: state.newPostText,
-        likesCount: 0,
+      let newPost = state.newPostText;
+      return {
+        ...state,
+        newPostText: "",
+        posts: [...state.posts, { id: 6, message: newPost, likesCount: 0 }],
       };
-      if (state.newPostText.trim() !== "") {
-        state.posts.push(newPost);
-        state.newPostText = "";
-      }
-      return state;
     }
     case UPDATE_NEW_POST_TEXT: {
-      return (state.newPostText = action.payload.newText);
+      return { ...state, newPostText: action.payload.newText };
     }
     default:
       return state;

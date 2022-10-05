@@ -1,5 +1,3 @@
-import { DialogsType, MessagesType } from "./Store";
-
 type ActionType = { type: string };
 
 const initialState = {};

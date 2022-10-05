@@ -1,9 +1,18 @@
-import { DialogsPageType, DialogsType, MessagesType } from "./Store";
-
 type DialogsActionType = updateNewMessageBodyACType | sendMessageACACType;
+
+export type DialogsType = {
+  id: number;
+  name: string;
+};
+
+export type MessagesType = {
+  id: number;
+  message: string;
+};
 
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
 const SEND_MESSAGE = "SEND-MESSAGE";
+
 const initialState = {
   dialogs: [
     { id: 1, name: "Valera" },
@@ -27,21 +36,19 @@ type InitialStateType = typeof initialState;
 export const dialogsReducer = (
   state: InitialStateType = initialState,
   action: DialogsActionType
-) => {
+): InitialStateType => {
   switch (action.type) {
     case SEND_MESSAGE: {
-      let newMessage = {
-        id: 5,
-        message: state.newMessageBody,
+      let newMessage = state.newMessageBody;
+
+      return {
+        ...state,
+        newMessageBody: "",
+        messages: [...state.messages, { id: 6, message: newMessage }],
       };
-      if (state.newMessageBody.trim() !== "") {
-        state.messages.push(newMessage);
-        state.newMessageBody = "";
-      }
-      return state;
     }
-    case "UPDATE-NEW-MESSAGE-BODY": {
-      return (state.newMessageBody = action.payload.newMessage);
+    case UPDATE_NEW_MESSAGE_BODY: {
+      return { ...state, newMessageBody: action.payload.newMessage };
     }
     default:
       return state;
