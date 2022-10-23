@@ -35,7 +35,8 @@ export const profileReducer = (
       };
     }
     case PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT: {
-      return { ...state, newPostText: action.payload.newText };
+      const { newText } = action.payload;
+      return { ...state, newPostText: newText };
     }
     default:
       return state;

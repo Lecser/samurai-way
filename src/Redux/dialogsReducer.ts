@@ -51,7 +51,8 @@ export const dialogsReducer = (
       };
     }
     case DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_BODY: {
-      return { ...state, newMessageBody: action.payload.newMessage };
+      const { newMessage } = action.payload;
+      return { ...state, newMessageBody: newMessage };
     }
     default:
       return state;
