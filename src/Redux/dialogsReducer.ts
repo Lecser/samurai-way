@@ -1,32 +1,35 @@
-type DialogsActionType = updateNewMessageBodyACType | sendMessageACACType;
+import { v1 } from "uuid";
+
+type DialogsAction = updateNewMessageBodyACType | sendMessageACACType;
 
 export type DialogsType = {
-  id: number;
+  id: string;
   name: string;
 };
 
 export type MessagesType = {
-  id: number;
+  id: string;
   message: string;
 };
-
-const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
-const SEND_MESSAGE = "SEND-MESSAGE";
+enum DIALOGS_ACTIONS_TYPE {
+  UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY",
+  SEND_MESSAGE = "SEND-MESSAGE",
+}
 
 const initialState = {
   dialogs: [
-    { id: 1, name: "Valera" },
-    { id: 2, name: "Petya" },
-    { id: 3, name: "Andrey" },
-    { id: 4, name: "Sasha" },
-    { id: 5, name: "Maks" },
+    { id: v1(), name: "Valera" },
+    { id: v1(), name: "Petya" },
+    { id: v1(), name: "Andrey" },
+    { id: v1(), name: "Sasha" },
+    { id: v1(), name: "Maks" },
   ] as Array<DialogsType>,
   messages: [
-    { id: 1, message: "Hi" },
-    { id: 2, message: "Nice Day" },
-    { id: 3, message: "God Way" },
-    { id: 4, message: "Ahahah" },
-    { id: 5, message: "Nice" },
+    { id: v1(), message: "Hi" },
+    { id: v1(), message: "Nice Day" },
+    { id: v1(), message: "God Way" },
+    { id: v1(), message: "Ahahah" },
+    { id: v1(), message: "Nice" },
   ] as Array<MessagesType>,
   newMessageBody: "",
 };
@@ -35,19 +38,19 @@ type InitialStateType = typeof initialState;
 
 export const dialogsReducer = (
   state: InitialStateType = initialState,
-  action: DialogsActionType
+  action: DialogsAction
 ): InitialStateType => {
   switch (action.type) {
-    case SEND_MESSAGE: {
+    case DIALOGS_ACTIONS_TYPE.SEND_MESSAGE: {
       let newMessage = state.newMessageBody;
 
       return {
         ...state,
         newMessageBody: "",
-        messages: [...state.messages, { id: 6, message: newMessage }],
+        messages: [...state.messages, { id: v1(), message: newMessage }],
       };
     }
-    case UPDATE_NEW_MESSAGE_BODY: {
+    case DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_BODY: {
       return { ...state, newMessageBody: action.payload.newMessage };
     }
     default:
@@ -57,7 +60,7 @@ export const dialogsReducer = (
 type updateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>;
 export const updateNewMessageBodyAC = (newMessage: string) => {
   return {
-    type: UPDATE_NEW_MESSAGE_BODY,
+    type: DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_BODY,
     payload: {
       newMessage: newMessage,
     },
@@ -66,6 +69,6 @@ export const updateNewMessageBodyAC = (newMessage: string) => {
 type sendMessageACACType = ReturnType<typeof sendMessageAC>;
 export const sendMessageAC = () => {
   return {
-    type: SEND_MESSAGE,
+    type: DIALOGS_ACTIONS_TYPE.SEND_MESSAGE,
   } as const;
 };

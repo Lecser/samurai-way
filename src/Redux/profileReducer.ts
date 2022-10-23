@@ -1,36 +1,40 @@
-type ProfileActionType = addPostACType | updateNewPostTextACType;
+import { v1 } from "uuid";
 
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_POST = "ADD-POST";
+type ProfileAction = addPostACType | updateNewPostTextACType;
+
+export enum PROFILE_ACTIONS_TYPE {
+  UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT",
+  ADD_POST = "ADD-POST",
+}
 
 export type PostsType = {
-  id: number;
+  id: string;
   message: string;
   likesCount: number;
 };
 type InitialStateType = typeof initialState;
 const initialState = {
   posts: [
-    { id: 1, message: "Hi, how are you?", likesCount: 15 },
-    { id: 2, message: "first post", likesCount: 20 },
+    { id: v1(), message: "Hi, how are you?", likesCount: 15 },
+    { id: v1(), message: "first post", likesCount: 20 },
   ] as Array<PostsType>,
   newPostText: "",
 };
 
 export const profileReducer = (
   state: InitialStateType = initialState,
-  action: ProfileActionType
+  action: ProfileAction
 ): InitialStateType => {
   switch (action.type) {
-    case ADD_POST: {
+    case PROFILE_ACTIONS_TYPE.ADD_POST: {
       let newPost = state.newPostText;
       return {
         ...state,
         newPostText: "",
-        posts: [...state.posts, { id: 6, message: newPost, likesCount: 0 }],
+        posts: [...state.posts, { id: v1(), message: newPost, likesCount: 0 }],
       };
     }
-    case UPDATE_NEW_POST_TEXT: {
+    case PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT: {
       return { ...state, newPostText: action.payload.newText };
     }
     default:
@@ -41,14 +45,14 @@ export const profileReducer = (
 type addPostACType = ReturnType<typeof addPostAC>;
 export const addPostAC = () => {
   return {
-    type: ADD_POST,
+    type: PROFILE_ACTIONS_TYPE.ADD_POST,
   } as const;
 };
 
 type updateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>;
 export const updateNewPostTextAC = (newText: string) => {
   return {
-    type: UPDATE_NEW_POST_TEXT,
+    type: PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT,
     payload: {
       newText: newText,
     },
