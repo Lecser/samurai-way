@@ -5,7 +5,7 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { Profile } from "./components/Profile/Profile";
 import { Route } from "react-router-dom";
 import { DialogsContainer } from "./components/Dialogs/DialogsContainer";
-import { Users } from "./components/Users/Users";
+import { UsersContainer } from "./components/Users/UsersContainer";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <div className={"app-wrapper-content"}>
         <Route path={"/Dialogs"} render={() => <DialogsContainer />} />
         <Route path={"/Profile"} render={() => <Profile />} />
-        <Route path={"/Users"} render={() => <Users />} />
+        <Route path={"/Users"} render={() => <UsersContainer />} />
       </div>
     </div>
   );

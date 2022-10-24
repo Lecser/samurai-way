@@ -2,43 +2,27 @@ import { v1 } from "uuid";
 
 export enum USERS_ACTIONS_TYPE {
   FOLLOW_UPDATE = "FOLLOW_UPDATE",
+  SET_USERS = "SET_USERS",
 }
 
 type followAC = ReturnType<typeof followAC>;
-type UsersActionType = followAC;
+type SetUsersAC = ReturnType<typeof setUsersAC>;
+type UsersActionType = followAC | SetUsersAC;
 
-export type usersType = {
+export type UserType = {
   id: string;
+  photoUrl: string;
   fullName: string;
   follow: boolean;
   status: string;
-  location: { city: string; country: string };
+  location: userLocation;
 };
-type InitialStateType = typeof initialState;
+
+export type userLocation = { city: string; country: string };
+
+export type InitialStateType = typeof initialState;
 const initialState = {
-  users: [
-    {
-      id: v1(),
-      fullName: "Alex",
-      follow: false,
-      status: "false",
-      location: { city: "Moscow", country: "Russia" },
-    },
-    {
-      id: v1(),
-      fullName: "George",
-      follow: false,
-      status: "false",
-      location: { city: "Moscow", country: "Russia" },
-    },
-    {
-      id: v1(),
-      fullName: "SerGay",
-      follow: false,
-      status: "false",
-      location: { city: "Moscow", country: "Russia" },
-    },
-  ] as usersType[],
+  users: [] as UserType[],
 };
 
 export const usersReducer = (
@@ -54,18 +38,26 @@ export const usersReducer = (
           u.id === userId ? { ...u, follow } : u
         ),
       };
-
+    case USERS_ACTIONS_TYPE.SET_USERS:
+      const { users } = action.payload;
+      return { ...state, users: [...state.users, ...users] };
     default:
       return state;
   }
 };
 
-const followAC = (userId: string, follow: boolean) => {
+export const followAC = (userId: string, follow: boolean) => {
   return {
     type: USERS_ACTIONS_TYPE.FOLLOW_UPDATE,
     payload: {
       userId,
       follow,
     },
+  } as const;
+};
+export const setUsersAC = (users: UserType[]) => {
+  return {
+    type: USERS_ACTIONS_TYPE.SET_USERS,
+    payload: { users },
   } as const;
 };

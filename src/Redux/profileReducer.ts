@@ -12,7 +12,7 @@ export type PostsType = {
   message: string;
   likesCount: number;
 };
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 const initialState = {
   posts: [
     { id: v1(), message: "Hi, how are you?", likesCount: 15 },

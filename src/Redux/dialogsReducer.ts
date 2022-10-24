@@ -34,7 +34,7 @@ const initialState = {
   newMessageBody: "",
 };
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 
 export const dialogsReducer = (
   state: InitialStateType = initialState,

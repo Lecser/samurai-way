@@ -1,16 +1,9 @@
 import React, { ChangeEvent } from "react";
 import classes from "./MyPosts.module.css";
 import { Post } from "./Post/Post";
-import { PostsType } from "../../../Redux/profileReducer";
+import { MyPostPropsType } from "./MyPostsContainer";
 
-type MyPostsPropsType = {
-  addPost: () => void;
-  updateNewPost: (value: string) => void;
-  posts: Array<PostsType>;
-  newPostText: string;
-};
-
-export const MyPosts = (props: MyPostsPropsType) => {
+export const MyPosts = (props: MyPostPropsType) => {
   const addPost = () => {
     props.addPost();
   };
@@ -25,7 +18,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
           <textarea
             placeholder={"Add post"}
             onChange={onChangeHandler}
-            value={props.newPostText}
+            value={props.profilePage.newPostText}
           />
         </div>
         <div>
@@ -34,7 +27,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
       </div>
       <div>new post</div>
       <div className={classes.posts}>
-        {props.posts.map((p) => (
+        {props.profilePage.posts.map((p) => (
           <Post key={p.id} message={p.message} likesCount={p.likesCount} />
         ))}
       </div>

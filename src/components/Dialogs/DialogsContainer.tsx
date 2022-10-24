@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  InitialStateType,
   sendMessageAC,
   updateNewMessageBodyAC,
 } from "../../Redux/dialogsReducer";
@@ -7,15 +8,24 @@ import { Dialogs } from "./Dialogs";
 import { AppDispatch, AppStoreType } from "../../Redux/reduxStore";
 import { connect } from "react-redux";
 
-let mapStateToProps = (state: AppStoreType) => {
+export type MapStateToProps = {
+  dialogsPage: InitialStateType;
+};
+
+export type MapDispatchToProps = {
+  updateTextAreaBody: (newMessageBody: string) => void;
+  sendBtnHandler: () => void;
+};
+
+export type DialogPagePropsType = MapStateToProps & MapDispatchToProps;
+
+let mapStateToProps = (state: AppStoreType): MapStateToProps => {
   return {
-    dialogs: state.dialogsPage.dialogs,
-    messages: state.dialogsPage.messages,
-    newMessageBody: state.dialogsPage.newMessageBody,
+    dialogsPage: state.dialogsPage,
   };
 };
 
-let mapDispatchToProps = (dispatch: AppDispatch) => {
+let mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToProps => {
   return {
     updateTextAreaBody: (newMessageBody: string) => {
       dispatch(updateNewMessageBodyAC(newMessageBody));
