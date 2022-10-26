@@ -1,67 +1,53 @@
 import React from "react";
-import classes from "./Users.module.css";
-import { v1 } from "uuid";
 import { UsersPropsType } from "./UsersContainer";
+import classes from "./Users.module.css";
+import defaultUserAvatar from "../../assets/images/defaultUserAvatar.png";
+import axios, { AxiosResponse } from "axios";
+import { UserType } from "../../Redux/usersReducer";
 
-export const Users = (props: UsersPropsType) => {
-  if (props.usersPage.users.length === 0) {
-    props.setUsers([
-      {
-        id: v1(),
-        fullName: "Alex",
-        photoUrl: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-        follow: false,
-        status: "im Alex",
-        location: { city: "Moscow", country: "Russia" },
-      },
-      {
-        id: v1(),
-        photoUrl: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-        fullName: "George",
-        follow: false,
-        status: "im George",
-        location: { city: "Moscow", country: "Russia" },
-      },
-      {
-        id: v1(),
-        photoUrl: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-        fullName: "SerGay",
-        follow: false,
-        status: "im SerGay",
-        location: { city: "Moscow", country: "Russia" },
-      },
-    ]);
+export class Users extends React.Component<UsersPropsType> {
+  componentDidMount() {
+    if (this.props.usersPage.users.length === 0) {
+      axios
+        .get<UserType[]>("https://social-network.samuraijs.com/api/1.0/users")
+        .then((r: AxiosResponse) => {
+          this.props.setUsers(r.data.items);
+        });
+    }
   }
-  return (
-    <div>
-      {props.usersPage.users.map((u) => (
-        <div key={u.id}>
-          <span>
-            <div>
-              <img
-                className={classes.userAvatar}
-                src={u.photoUrl}
-                alt="userAvatar"
-              />
+
+  render() {
+    return (
+      <div>
+        {this.props.usersPage.users.map((u) => (
+          <div key={u.id}>
+            <span>
               <div>
-                <button onClick={() => props.followUpdate(u.id, !u.follow)}>
-                  {u.follow ? "Unfollow" : "Follow"}
-                </button>
+                <img
+                  className={classes.userAvatar}
+                  src={
+                    u.photos.small != null ? u.photos.small : defaultUserAvatar
+                  }
+                  alt="userAvatar"
+                />
+                <div>
+                  <button
+                    onClick={() => this.props.followUpdate(u.id, !u.followed)}
+                  >
+                    {u.followed ? "Unfollow" : "Follow"}
+                  </button>
+                </div>
               </div>
-            </div>
-          </span>
-          <span>
-            <span>
-              <div>{u.fullName}</div>
-              <div>{u.status}</div>
             </span>
             <span>
-              <div>{u.location.country}</div>
-              <div>{u.location.city}</div>
+              <span>
+                <div>{u.name}</div>
+                <div>{u.status}</div>
+              </span>
             </span>
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-};
+          </div>
+        ))}
+      </div>
+    );
+  }
+}

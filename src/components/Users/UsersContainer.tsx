@@ -14,7 +14,7 @@ export type MapStateToProps = {
 };
 
 export type MapDispatchToProps = {
-  followUpdate: (userId: string, follow: boolean) => void;
+  followUpdate: (userId: number, follow: boolean) => void;
   setUsers: (users: UserType[]) => void;
 };
 
@@ -26,7 +26,7 @@ let mapStateToProps = (state: AppStoreType): MapStateToProps => {
 
 let mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToProps => {
   return {
-    followUpdate: (userId: string, follow: boolean) => {
+    followUpdate: (userId: number, follow: boolean) => {
       dispatch(followAC(userId, follow));
     },
     setUsers: (users: UserType[]) => {

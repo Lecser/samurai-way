@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Post.module.css";
-
+import defaultUserAvatar from "../../../../assets/images/defaultUserAvatar.png";
 type postPropType = {
   message: string;
   likesCount: number;
@@ -9,10 +9,7 @@ type postPropType = {
 export const Post = (props: postPropType) => {
   return (
     <div className={classes.item}>
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
-        alt="avatarImg"
-      />
+      <img src={defaultUserAvatar} alt="avatarImg" />
       {props.message}
       <div>
         <span>like</span> {props.likesCount}
