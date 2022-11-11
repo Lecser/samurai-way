@@ -16,6 +16,7 @@ body {
   grid-template-columns: 1fr 10fr;
   grid-gap: 5px;
   background: #141414;
+
 }
 
 .app-wrapper-content {

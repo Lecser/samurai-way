@@ -1,7 +1,14 @@
 import React from "react";
 import classes from "./ProfileInfo.module.css";
+import { ProfileType } from "../../../Redux/profileReducer";
+import { Preloader } from "../../common/Preloader/Preloader";
+import defaultUserAvatar from "../../../assets/images/defaultUserAvatar.png";
 
-export const ProfileInfo = () => {
+type ProfileInfoPropsType = { profile: ProfileType | null };
+export const ProfileInfo = (props: ProfileInfoPropsType) => {
+  if (!props.profile) {
+    return <Preloader />;
+  }
   return (
     <div>
       <div>
@@ -12,7 +19,15 @@ export const ProfileInfo = () => {
           alt={"img"}
         />
       </div>
-      <div className={classes.descriptionBlock}>ava</div>
+      <img
+        src={
+          props.profile.photos.small
+            ? props.profile.photos.small
+            : defaultUserAvatar
+        }
+        alt={"avatar"}
+      />
+      <div className={classes.descriptionBlock}>{props.profile.fullName}</div>
     </div>
   );
 };

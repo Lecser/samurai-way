@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Post.module.css";
 import defaultUserAvatar from "../../../../assets/images/defaultUserAvatar.png";
+
 type postPropType = {
   message: string;
   likesCount: number;

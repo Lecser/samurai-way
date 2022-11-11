@@ -12,3 +12,13 @@
   width: 130px;
   margin-left: 5px;
 }
+
+.loginBlock{
+display: flex;
+
+  float:right;
+}
+
+.loginBlock a{
+  color: grey;
+}

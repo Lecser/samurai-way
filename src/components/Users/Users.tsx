@@ -1,39 +1,82 @@
 import React from "react";
-import { UsersPropsType } from "./UsersContainer";
 import classes from "./Users.module.css";
 import defaultUserAvatar from "../../assets/images/defaultUserAvatar.png";
-import axios, { AxiosResponse } from "axios";
 import { UserType } from "../../Redux/usersReducer";
+import { NavLink } from "react-router-dom";
+import { AxiosResponse } from "axios";
+import { api } from "../../api/api";
 
-export class Users extends React.Component<UsersPropsType> {
-  componentDidMount() {
-    if (this.props.usersPage.users.length === 0) {
-      axios
-        .get<UserType[]>("https://social-network.samuraijs.com/api/1.0/users")
-        .then((r: AxiosResponse) => {
-          this.props.setUsers(r.data.items);
-        });
-    }
+type UsersPropsType = {
+  users: UserType[];
+  totalUsersCount: number;
+  pageSize: number;
+  currentPage: number;
+  onClickPage: (pageNumber: number) => void;
+  followUpdate: (userId: number, follow: boolean) => void;
+};
+export const Users = (props: UsersPropsType) => {
+  const {
+    users,
+    totalUsersCount,
+    pageSize,
+    currentPage,
+    onClickPage,
+    followUpdate,
+  } = props;
+  const onClickHandler = (pageNumber: number) => {
+    props.onClickPage(pageNumber);
+  };
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(totalUsersCount / pageSize); i++) {
+    pageNumbers.push(i);
   }
 
-  render() {
-    return (
+  return (
+    <div>
       <div>
-        {this.props.usersPage.users.map((u) => (
+        {pageNumbers.map((p, index) => (
+          <span
+            key={index}
+            onClick={() => onClickHandler(p)}
+            className={currentPage === p ? classes.selectedPage : ""}
+          >
+            {p + " "}
+          </span>
+        ))}
+      </div>
+      {users.map((u) => {
+        const followHandler = () => {
+          if (!u.followed) {
+            api.followUser(u.id).then((r: AxiosResponse) => {
+              if (r.data.resultCode === 0) {
+                props.followUpdate(u.id, true);
+              }
+            });
+          } else {
+            api.unfollowUser(u.id).then((r: AxiosResponse) => {
+              if (r.data.resultCode === 0) {
+                props.followUpdate(u.id, false);
+              }
+            });
+          }
+        };
+        return (
           <div key={u.id}>
             <span>
               <div>
-                <img
-                  className={classes.userAvatar}
-                  src={
-                    u.photos.small != null ? u.photos.small : defaultUserAvatar
-                  }
-                  alt="userAvatar"
-                />
+                <NavLink to={`/Profile/${u.id}`}>
+                  <img
+                    className={classes.userAvatar}
+                    src={
+                      u.photos.small != null
+                        ? u.photos.small
+                        : defaultUserAvatar
+                    }
+                    alt="userAvatar"
+                  />
+                </NavLink>
                 <div>
-                  <button
-                    onClick={() => this.props.followUpdate(u.id, !u.followed)}
-                  >
+                  <button onClick={followHandler}>
                     {u.followed ? "Unfollow" : "Follow"}
                   </button>
                 </div>
@@ -46,8 +89,8 @@ export class Users extends React.Component<UsersPropsType> {
               </span>
             </span>
           </div>
-        ))}
-      </div>
-    );
-  }
-}
+        );
+      })}
+    </div>
+  );
+};
